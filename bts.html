@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dasturlash Olami — ULTRA</title>
+
+<style>
+/* ================= RESET ================= */
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
+body{background:#020617;color:#e5e7eb;line-height:1.6;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;border:none}
+
+/* ================= VARIABLES ================= */
+:root{
+  --primary:#6366f1;
+  --secondary:#22d3ee;
+  --dark:#020617;
+  --card:#020617;
+  --radius:18px;
+}
+
+/* ================= BACKGROUND ================= */
+.bg-decor{
+  position:fixed;inset:0;z-index:-1;pointer-events:none
+}
+.bg-decor span{
+  position:absolute;width:420px;height:420px;border-radius:50%;
+  filter:blur(140px);opacity:.35;animation:float 18s infinite
+}
+.bg-decor span:nth-child(1){background:#22d3ee;top:10%;left:5%}
+.bg-decor span:nth-child(2){background:#6366f1;bottom:10%;right:5%;animation-delay:6s}
+.bg-decor span:nth-child(3){background:#38bdf8;top:50%;right:35%;animation-delay:12s}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-60px)}}
+
+/* ================= HEADER ================= */
+header{
+  position:fixed;top:0;left:0;width:100%;
+  background:rgba(2,6,23,.85);
+  backdrop-filter:blur(12px);z-index:100
+}
+.navbar{
+  max-width:1300px;margin:auto;
+  display:flex;justify-content:space-between;
+  align-items:center;padding:16px 20px
+}
+.logo{font-size:22px;font-weight:700}
+.nav-links{display:flex;gap:18px}
+.nav-links a{
+  padding:8px 14px;border-radius:12px;
+  transition:.3s
+}
+.nav-links a:hover{background:var(--primary)}
+.hamburger{display:none;flex-direction:column;gap:5px}
+.hamburger span{width:26px;height:3px;background:#fff}
+
+/* ================= HERO ================= */
+.hero{
+  min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;
+  background:radial-gradient(circle at top,var(--primary),#020617)
+}
+.hero h1{font-size:52px}
+.hero p{opacity:.85;margin:20px 0}
+.hero-buttons{display:flex;gap:20px;justify-content:center;flex-wrap:wrap}
+.btn{
+  padding:14px 30px;border-radius:var(--radius);
+  font-weight:700;transition:.4s
+}
+.btn.primary{
+  background:linear-gradient(90deg,var(--secondary),var(--primary));
+  color:#020617
+}
+.btn.secondary{border:2px solid var(--primary)}
+.btn:hover{
+  transform:scale(1.08);
+  box-shadow:0 0 30px var(--primary)
+}
+
+/* ================= MAIN ================= */
+main{max-width:1300px;margin:auto;padding:120px 20px}
+section{margin-bottom:120px;animation:fade .6s ease}
+section h2{font-size:34px;margin-bottom:40px;text-align:center}
+@keyframes fade{from{opacity:0;transform:translateY(30px)}to{opacity:1}}
+
+/* ================= CARDS ================= */
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:30px
+}
+.card{
+  background:var(--card);
+  border-radius:22px;
+  padding:30px;
+  position:relative;
+  overflow:hidden;
+  transition:.5s
+}
+.card::after{
+  content:"";
+  position:absolute;inset:0;
+  background:linear-gradient(120deg,transparent,var(--secondary),transparent);
+  opacity:0;transition:.5s
+}
+.card:hover::after{opacity:.15}
+.card:hover{
+  transform:translateY(-12px);
+  box-shadow:0 0 40px var(--secondary)
+}
+.card h3{margin-bottom:10px}
+.card p{opacity:.8;font-size:14px}
+.card button{
+  margin-top:18px;
+  padding:12px 24px;
+  border-radius:14px;
+  background:linear-gradient(90deg,var(--secondary),var(--primary));
+  font-weight:700
+}
+
+/* ================= PROJECT TAG ================= */
+.tag{
+  display:inline-block;
+  padding:4px 10px;
+  font-size:12px;
+  border-radius:10px;
+  background:#111827;
+  margin-bottom:10px
+}
+
+/* ================= STATS ================= */
+.stats{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:30px
+}
+.stat{
+  background:#020617;
+  border-radius:22px;
+  padding:40px;
+  text-align:center
+}
+.stat h3{font-size:38px;color:var(--secondary)}
+
+/* ================= FAQ ================= */
+.faq-text{
+  max-height:0;
+  overflow:hidden;
+  transition:.4s;
+  opacity:.8
+}
+.faq-text.open{max-height:120px;margin-top:10px}
+
+/* ================= PROGRESS ================= */
+.progress{
+  height:14px;
+  background:#111827;
+  border-radius:10px;
+  overflow:hidden;
+  margin-top:20px
+}
+.progress span{
+  display:block;
+  height:100%;
+  width:62%;
+  background:linear-gradient(90deg,var(--secondary),var(--primary))
+}
+
+/* ================= MODAL ================= */
+.modal{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.7);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:200
+}
+.modal-content{
+  background:#020617;
+  padding:40px;
+  border-radius:22px;
+  max-width:420px;
+  width:90%;
+  text-align:center
+}
+
+/* ================= FOOTER ================= */
+footer{
+  text-align:center;
+  padding:40px;
+  background:#020617;
+  opacity:.8
+}
+
+/* ================= MOBILE ================= */
+@media(max-width:800px){
+  .nav-links{
+    display:none;
+    position:absolute;
+    top:70px;left:0;
+    width:100%;
+    flex-direction:column;
+    background:#020617
+  }
+  .nav-links.show{display:flex}
+  .hamburger{display:flex}
+  .hero h1{font-size:34px}
+}
+/* YOUTUBE VIDEOS */
+.videos{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:30px;
+}
+
+.video-card{
+  background:#020617;
+  border-radius:22px;
+  overflow:hidden;
+  position:relative;
+  transition:.5s;
+}
+
+.video-card:hover{
+  transform:translateY(-10px) scale(1.02);
+  box-shadow:0 0 40px #22d3ee;
+}
+
+.video-card iframe{
+  width:100%;
+  height:200px;
+  border:none;
+}
+
+.video-info{
+  padding:18px;
+}
+
+.video-info h3{
+  font-size:18px;
+  margin-bottom:8px;
+}
+
+.video-info p{
+  font-size:14px;
+  opacity:.75;
+}
+
+</style>
+</head>
+<audio id="bgMusic" autoplay loop muted playsinline>
+  <source src="https://cdn.pixabay.com/audio/2022/10/30/audio_3f7c9d5f5b.mp3" type="audio/mpeg">
+</audio>
+
+<body>
+
+<div class="bg-decor">
+  <span></span><span></span><span></span>
+</div>
+
+<header>
+  <div class="navbar">
+    <div class="logo">💻 Dasturlash Olami</div>
+    <nav class="nav-links" id="nav">
+      <a onclick="go('home')">Home</a>
+      <a onclick="go('courses')">Kurslar</a>
+      <a onclick="go('projects')">Loyihalar</a>
+      <a onclick="go('donate')">Donate</a>
+    </nav>
+    <div class="hamburger" onclick="toggleNav()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</header>
+
+<section class="hero" id="home">
+  <div>
+    <h1>Frontend'ni PRO darajada o‘rgan</h1>
+    <p>HTML • CSS • Responsive • Real loyihalar</p>
+    <div class="hero-buttons">
+      <a class="btn primary" onclick="go('courses')">Boshlash</a>
+      <a class="btn secondary" onclick="go('projects')">Loyihalar</a>
+    </div>
+  </div>
+</section>
+
+<main>
+
+<section id="courses">
+<h2>📚 Kurslar</h2>
+<div class="cards">
+  <div class="card"><h3>HTML</h3><p>Semantik, SEO</p><button onclick="notify('HTML')">Kirish</button></div>
+  <div class="card"><h3>CSS</h3><p>Flex, Grid, Anim</p><button onclick="notify('CSS')">Kirish</button></div>
+  <div class="card"><h3>Responsive</h3><p>Mobile-first</p><button onclick="notify('Responsive')">Kirish</button></div>
+</div>
+</section>
+
+<section id="projects">
+<h2>🚀 Loyihalar</h2>
+<div class="cards">
+  <div class="card"><span class="tag">Frontend</span><h3>Portfolio</h3><p>Shaxsiy sayt</p><button onclick="notify('Portfolio')">Ko‘rish</button></div>
+  <div class="card"><span class="tag">Business</span><h3>Landing</h3><p>Biznes sahifa</p><button onclick="notify('Landing')">Ko‘rish</button></div>
+  <div class="card"><span class="tag">Admin</span><h3>Dashboard</h3><p>Admin UI</p><button onclick="notify('Dashboard')">Ko‘rish</button></div>
+</div>
+</section>
+
+<section id="donate">
+<h2>❤️ Donate</h2>
+<div class="cards">
+  <div class="card"><h3>Coffee</h3><button onclick="openModal(1)">1$</button></div>
+  <div class="card"><h3>Supporter</h3><button onclick="openModal(5)">5$</button></div>
+  <div class="card"><h3>Premium</h3><button onclick="openModal(10)">10$</button></div>
+</div>
+</section>
+
+<section>
+<h2>🎯 Maqsad</h2>
+<div class="card">
+<p>Server va kontent uchun yig‘im</p>
+<div class="progress"><span></span></div>
+</div>
+</section>
+<section id="videos">
+  <h2>🎬 YouTube Darslar</h2>
+
+  <div class="videos">
+
+    <div class="video-card">
+      <iframe 
+        src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+        allowfullscreen>
+      </iframe>
+      <div class="video-info">
+        <h3>HTML Asoslari</h3>
+        <p>Boshlovchilar uchun to‘liq HTML dars</p>
+      </div>
+    </div>
+
+    <div class="video-card">
+      <iframe 
+        src="https://www.youtube.com/embed/9bZkp7q19f0"
+        allowfullscreen>
+      </iframe>
+      <div class="video-info">
+        <h3>CSS Animation</h3>
+        <p>Professional hover va effektlar</p>
+      </div>
+    </div>
+
+    <div class="video-card">
+      <iframe 
+        src="https://www.youtube.com/embed/oHg5SJYRHA0"
+        allowfullscreen>
+      </iframe>
+      <div class="video-info">
+        <h3>Responsive Design</h3>
+        <p>Mobile & Desktop moslashuv</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+</main>
+
+<footer>
+<p>© 2025 Dasturlash Olami — ULTRA</p>
+</footer>
+
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <h3 id="donateTitle">Rahmat ❤️</h3>
+    <p>Bu demo donate oynasi</p>
+    <button class="btn primary" onclick="closeModal()">Yopish</button>
+  </div>
+</div>
+
+<script>
+function go(id){
+  document.getElementById(id).scrollIntoView({behavior:'smooth'});
+  document.getElementById('nav').classList.remove('show');
+}
+function toggleNav(){
+  document.getElementById('nav').classList.toggle('show');
+}
+function notify(name){
+  alert(name+" loyihasi tez orada ochiladi");
+}
+function openModal(sum){
+  document.getElementById('modal').style.display='flex';
+  document.getElementById('donateTitle').innerText="Donate: "+sum+"$";
+}
+function closeModal(){
+  document.getElementById('modal').style.display='none';
+}
+
+const music = document.getElementById("bgMusic");
+
+// sahifa yuklanganda
+window.addEventListener("load", () => {
+  music.play().catch(()=>{});
+});
+
+// har qanday harakatda ovozni yoqishga urinish
+["click","mousemove","keydown","touchstart"].forEach(event=>{
+  document.addEventListener(event,()=>{
+    if(music.muted){
+      music.muted = false;
+      music.volume = 0.5;
+      music.play();
+    }
+  },{once:true});
+});
+
+
+</script>
+
+</body>
+</html>
